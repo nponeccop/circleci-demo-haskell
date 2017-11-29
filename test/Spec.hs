@@ -12,8 +12,8 @@ tests = [
            ]
       ]
 
-prop1 b = b == False
+prop1 a b = (a && b) == (b && a)
   where types = (b :: Bool)
 
-prop2 i = i == 42
+prop2 i = i * i + 1 > 0
   where types = (i :: Int)
