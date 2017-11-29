@@ -20,9 +20,9 @@ jobs:
           key: v2-cache
           paths:
             - /home/stackage/.stack
-      - run: stack install --test --system-ghc
+      - run: stack install --test --no-terminal --system-ghc
       - store_artifacts:
-          path: .local/bin/test-exe
+          path: .local/bin/demo-exe
           destination: raw-test-output
       - store_test_results:
           path: .stack-work/logs/*
