@@ -4,6 +4,7 @@ jobs:
     docker:
       # CircleCI Go images available at: https://hub.docker.com/r/circleci/golang/
       - image: fpco/stack-build:lts-9.14
+        user: stackage
 
     working_directory: /home/stackage
 
