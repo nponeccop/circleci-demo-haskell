@@ -14,11 +14,12 @@ jobs:
       - checkout
       - restore_cache:
           key: v2-cache
-          paths:
-            - /home/stackage/.stack
+
       - run: stack build --test --only-dependencies --no-terminal --system-ghc
       - save_cache:
           key: v2-cache
+          paths:
+            - /home/stackage/.stack
       - run: stack install --test --system-ghc
       - store_artifacts:
           path: .local/bin/test-exe
