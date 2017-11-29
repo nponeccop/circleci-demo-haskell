@@ -1,0 +1,23 @@
+version: 2
+jobs:
+  build:
+    docker:
+      # CircleCI Go images available at: https://hub.docker.com/r/circleci/golang/
+      - image: fpco/stack-build:lts-9.14
+
+    working_directory: /
+
+    environment:
+      TEST_RESULTS: /tmp/test-results
+
+    steps:
+      - checkout
+      - run: mkdir -p $TEST_RESULTS
+      - run: stack build --test --only-dependencies --no-terminal
+      - run: stack test
+      - store_artifacts:
+          path: /.local/bin/test-exe
+          destination: raw-test-output
+
+      - store_test_results:
+          path: .stack-work/logs/*
