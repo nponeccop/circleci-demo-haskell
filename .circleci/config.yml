@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  build-8.0.2:
     docker:
       # CircleCI Go images available at: https://hub.docker.com/r/circleci/golang/
       - image: fpco/stack-build:lts-9.14
@@ -25,3 +25,33 @@ jobs:
           destination: raw-test-output
       - store_test_results:
           path: ~/.stack-work/logs/*
+  build-8.2.2:
+    docker:
+      - image: fpco/stack-build:nightly-2017-12-05
+
+    working_directory: /home/stackage
+
+    environment:
+      TEST_RESULTS: /tmp/test-results
+
+    steps:
+      - checkout
+      - restore_cache:
+          key: v2-cache-8.2.2
+      - run: stack build --test --only-dependencies --no-terminal --system-ghc --stack-yaml=stack-8.2.2.yaml
+      - save_cache:
+          key: v2-cache-8.2.2
+          paths:
+            - ~/.stack
+      - run: stack install --test --no-terminal --system-ghc
+      - store_artifacts:
+          path: ~/.local/bin/demo-exe
+          destination: raw-test-output
+      - store_test_results:
+          path: ~/.stack-work/logs/*
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build-8.2.2
+      - build-8.0.2
