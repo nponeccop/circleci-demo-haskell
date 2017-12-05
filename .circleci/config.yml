@@ -27,7 +27,7 @@ jobs:
           path: ~/.stack-work/logs/*
   build-8.2.2:
     docker:
-      - image: fpco/stack-build:nightly-2017-12-05
+      - image: fpco/stack-build:lts-9.14
 
     working_directory: /home/stackage
 
