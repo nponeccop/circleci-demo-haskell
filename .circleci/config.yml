@@ -38,6 +38,7 @@ jobs:
       - checkout
       - restore_cache:
           key: v2-cache-8.2.2
+      - run: stack upgrade --git --system-ghc
       - run: stack setup --no-terminal --stack-yaml=stack-8.2.2.yaml
       - run: stack build --test --only-dependencies --no-terminal --stack-yaml=stack-8.2.2.yaml
       - save_cache:
